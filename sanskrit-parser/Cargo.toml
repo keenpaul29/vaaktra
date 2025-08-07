@@ -1,0 +1,11 @@
+[package]
+name = "sanskrit-parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sanskrit-lexer = { path = "../sanskrit-lexer" }
+thiserror = "1.0"
+
+[dev-dependencies]
+pretty_assertions = "1.3"
