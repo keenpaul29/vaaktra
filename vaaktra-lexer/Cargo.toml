@@ -6,4 +6,4 @@ edition = "2021"
 [dependencies]
 thiserror = "1.0"
 unicode-xid = "0.2"
-logos = { version = "0.13", features = ["export"] }
+logos = "0.13"
