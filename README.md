@@ -1,4 +1,4 @@
-# संस्कृत (Sanskrit) Programming Language
+# Vāktra (वाक्त्र) Programming Language
 
 A high-performance, statically-typed programming language based on Sanskrit, designed to be faster than C++ and Java while maintaining modern language features and safety guarantees.
 

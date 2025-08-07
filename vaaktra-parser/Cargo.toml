@@ -1,10 +1,10 @@
 [package]
-name = "sanskrit-parser"
+name = "vaaktra-parser"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-sanskrit-lexer = { path = "../sanskrit-lexer" }
+vaaktra-lexer = { path = "../vaaktra-lexer" }
 thiserror = "1.0"
 
 [dev-dependencies]

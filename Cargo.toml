@@ -1,5 +1,5 @@
 [package]
-name = "sanskrit-lang"
+name = "vaaktra"
 version = "0.1.0"
 edition = "2021"
 authors = ["Your Name"]
@@ -18,9 +18,9 @@ pretty_assertions = "1.3"
 
 [workspace]
 members = [
-    "sanskrit-lexer",
-    "sanskrit-parser",
-    "sanskrit-semantics",
-    "sanskrit-codegen",
-    "sanskrit-vm",
+    "vaaktra-lexer",
+    "vaaktra-parser",
+    "vaaktra-semantics",
+    "vaaktra-codegen",
+    "vaaktra-vm",
 ]

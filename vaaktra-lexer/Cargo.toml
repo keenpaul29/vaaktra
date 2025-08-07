@@ -1,5 +1,5 @@
 [package]
-name = "sanskrit-lexer"
+name = "vaaktra-lexer"
 version = "0.1.0"
 edition = "2021"
 
