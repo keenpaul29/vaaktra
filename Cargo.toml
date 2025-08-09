@@ -2,9 +2,13 @@
 name = "vaaktra"
 version = "0.1.0"
 edition = "2021"
-authors = ["Your Name"]
-description = "A high-performance programming language based on Sanskrit"
-license = "MIT"
+authors = ["Vāktra Team"]
+description = "Vāktra (वाक्त्र) - A high-performance Sanskrit-inspired programming language"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/vaaktra/vaaktra"
+keywords = ["programming-language", "sanskrit", "compiler", "jit"]
+categories = ["compilers"]
+build = "build.rs"
 
 # This is a binary crate (has a src/main.rs)
 [[bin]]
@@ -21,18 +25,24 @@ lalrpop-util = "0.20"
 # Workspace dependencies
 vaaktra-lexer = { path = "./vaaktra-lexer" }
 vaaktra-parser = { path = "./vaaktra-parser" }
+vaaktra-jit = { path = "./vaaktra-jit" }
+
+[build-dependencies]
+# Build script dependencies for automatic LLVM setup
 
 [dev-dependencies]
 pretty_assertions = "1.3"
+criterion = "0.5"
 
 [workspace]
 members = [
     "vaaktra-lexer",
     "vaaktra-parser",
-    # Uncomment these when the crates are ready
-    # "vaaktra-semantics",
-    # "vaaktra-codegen",
-    # "vaaktra-vm",
+    "vaaktra-jit",
+    # Additional high-performance crates
+    "vaaktra-semantics",
+    "vaaktra-codegen",
+    "vaaktra-vm",
 ]
 
 # Default to the member directory as the workspace root

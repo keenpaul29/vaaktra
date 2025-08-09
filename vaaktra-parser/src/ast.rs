@@ -141,6 +141,7 @@ pub struct DharmaDef {
     pub type_params: Vec<TypeParam>,
     pub fields: Vec<FieldDef>,
     pub methods: Vec<MantraDef>,
+    pub visibility: Visibility,
     pub span: Span,
 }
 
@@ -154,6 +155,7 @@ pub struct MantraDef {
     pub body: Block,
     pub is_async: bool,
     pub is_unsafe: bool,
+    pub visibility: Visibility,
     pub span: Span,
 }
 
@@ -179,6 +181,8 @@ pub struct YantraDef {
 /// Statements in Vāktra
 #[derive(Debug, Clone, PartialEq)]
 pub enum Statement {
+    /// A top-level item
+    Item(Item),
     /// A variable declaration
     Sutra(SutraDef),
     /// An expression statement
@@ -275,7 +279,7 @@ pub struct FieldDef {
 }
 
 /// Visibility modifier
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Visibility {
     Public,
     Private,
@@ -288,7 +292,7 @@ pub enum Visibility {
 /// Function parameter
 #[derive(Debug, Clone, PartialEq)]
 pub struct Param {
-    pub pattern: Pattern,
+    pub name: RcStr,
     pub ty: Type,
     pub default_value: Option<Expr>,
     pub span: Span,
@@ -326,14 +330,14 @@ pub enum Type {
 }
 
 /// Path to an item (e.g., std::collections::HashMap)
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Path {
     pub segments: Vec<PathSegment>,
     pub span: Span,
 }
 
 /// Segment of a path
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct PathSegment {
     pub ident: RcStr,
     pub args: Option<GenericArgs>,
@@ -491,10 +495,41 @@ pub enum Literal {
 impl fmt::Display for Type {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Type::Int => write!(f, "संख्या"),
-            Type::Bool => write!(f, "सत्यासत्य"),
-            Type::String => write!(f, "पाठ"),
-            Type::Void => write!(f, "शून्य"),
+            Type::Named(path, _) => write!(f, "{:?}", path),
+            Type::Tuple(types, _) => {
+                write!(f, "(")?;
+                for (i, ty) in types.iter().enumerate() {
+                    if i > 0 { write!(f, ", ")?; }
+                    write!(f, "{}", ty)?;
+                }
+                write!(f, ")")
+            },
+            Type::Function(params, ret, _) => {
+                write!(f, "(")?;
+                for (i, param) in params.iter().enumerate() {
+                    if i > 0 { write!(f, ", ")?; }
+                    write!(f, "{}", param)?;
+                }
+                write!(f, ") -> {}", ret)
+            },
+            Type::Reference(ty, mutable, _) => {
+                if *mutable {
+                    write!(f, "&mut {}", ty)
+                } else {
+                    write!(f, "&{}", ty)
+                }
+            },
+            Type::Array(ty, size, _) => {
+                if let Some(size) = size {
+                    write!(f, "[{}; {:?}]", ty, size)
+                } else {
+                    write!(f, "[{}]", ty)
+                }
+            },
+            Type::Slice(ty, _) => write!(f, "[{}]", ty),
+            Type::Never(_) => write!(f, "!"),
+            Type::Infer(_) => write!(f, "_"),
+            Type::Error => write!(f, "<error>"),
         }
     }
 }
@@ -508,7 +543,7 @@ impl fmt::Display for BinaryOp {
             BinaryOp::Divide => write!(f, "/"),
             BinaryOp::Modulo => write!(f, "%"),
             BinaryOp::Equal => write!(f, "=="),
-            BinaryOp::NotEqual => write>(f, "!="),
+            BinaryOp::NotEqual => write!(f, "!="),
             BinaryOp::Less => write!(f, "<"),
             BinaryOp::LessEqual => write!(f, "<="),
             BinaryOp::Greater => write!(f, ">"),

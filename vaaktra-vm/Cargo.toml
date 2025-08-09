@@ -1,0 +1,30 @@
+[package]
+name = "vaaktra-vm"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name"]
+description = "High-performance virtual machine for Vāktra - Sanskrit-inspired language runtime"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+thiserror = "1.0"
+log = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+
+# Performance
+rayon = "1.7"
+crossbeam = "0.8"
+parking_lot = "0.12"
+
+# Memory management
+mimalloc = { version = "0.1", features = ["override"] }
+
+# Workspace dependencies
+vaaktra-parser = { path = "../vaaktra-parser" }
+vaaktra-semantics = { path = "../vaaktra-semantics" }
+vaaktra-codegen = { path = "../vaaktra-codegen" }
+vaaktra-jit = { path = "../vaaktra-jit" }
+
+[dev-dependencies]
+criterion = "0.5"

@@ -10,3 +10,6 @@
 - Vedic Sanskrit vocabulary and concepts (from Vedas, mantras, Puranas) are being integrated into the language design and lexer.
 - Integration of Vedic Sanskrit vocabulary and concepts into the lexer and language design is complete.
 - User requests deep integration of all Sanskrit concepts, JIT compilation, advanced memory management, and every parameter for maximal speed and power.
+
+<code>copy "C:\Users\ADMIN\.config\llvmenv\entry.toml" "$env:APPDATA\llvmenv\entry.toml"</code>
+<code>llvmenv build-entry llvm</code>

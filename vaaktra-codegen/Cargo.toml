@@ -1,0 +1,30 @@
+[package]
+name = "vaaktra-codegen"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name"]
+description = "Code generation backend for Vāktra - maximum performance Sanskrit language"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+thiserror = "1.0"
+log = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+
+# Code generation with Cranelift
+cranelift = "0.102"
+cranelift-module = "0.102"
+cranelift-jit = "0.102"
+cranelift-codegen = "0.102"
+
+# Target-specific backends
+target-lexicon = "0.12"
+
+# Workspace dependencies
+vaaktra-parser = { path = "../vaaktra-parser" }
+vaaktra-semantics = { path = "../vaaktra-semantics" }
+vaaktra-jit = { path = "../vaaktra-jit" }
+
+[dev-dependencies]
+criterion = "0.5"

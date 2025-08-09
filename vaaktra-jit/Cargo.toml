@@ -1,0 +1,37 @@
+[package]
+name = "vaaktra-jit"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name"]
+description = "JIT compilation engine for Vāktra - maximum performance Sanskrit-based language"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+thiserror = "1.0"
+log = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+
+# LLVM bindings for JIT compilation - try newer inkwell with better LLVM handling
+inkwell = { version = "0.4", features = ["llvm15-0"], optional = true }
+
+# Memory management
+mimalloc = { version = "0.1", features = ["override"] }
+
+# Concurrency and parallelism
+rayon = "1.8"
+crossbeam = "0.8"
+parking_lot = "0.12"
+num_cpus = "1.16"
+
+# Workspace dependencies
+vaaktra-parser = { path = "../vaaktra-parser" }
+vaaktra-lexer = { path = "../vaaktra-lexer" }
+
+[features]
+default = ["llvm"]
+llvm = ["inkwell"]
+
+[dev-dependencies]
+criterion = "0.5"
+proptest = "1.0"

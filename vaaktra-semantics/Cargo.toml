@@ -1,0 +1,24 @@
+[package]
+name = "vaaktra-semantics"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name"]
+description = "Semantic analysis and type checking for Vāktra - Sanskrit-inspired language"
+license = "MIT"
+
+[dependencies]
+# Core dependencies
+thiserror = "1.0"
+log = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+
+# Data structures
+petgraph = "0.6"
+indexmap = "2.0"
+
+# Workspace dependencies
+vaaktra-parser = { path = "../vaaktra-parser" }
+vaaktra-lexer = { path = "../vaaktra-lexer" }
+
+[dev-dependencies]
+pretty_assertions = "1.3"
